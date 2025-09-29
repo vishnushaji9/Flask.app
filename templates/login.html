@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #013715, #034127, #033c19);
+            font-family:  'sans-serif';
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            color: white;
+            width: 320px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+
+        input[type=submit] {
+            background-color: #fff;
+            color: #2c5364;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        a {
+            color: #877300;
+            text-decoration: none;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        /* Flash message styling */
+        .success {
+            background-color: #00ff5e;
+            color: white;
+        }
+
+        .danger {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .warning {
+            background-color: #facc15;
+            color: black;
+        }
+
+        .success, .danger, .warning {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <h2>Login</h2>
+        {{ form.hidden_tag() }}
+        {{ form.email.label }}<br>{{ form.email(size=30) }}<br>
+        {{ form.password.label }}<br>{{ form.password(size=30) }}<br><br><br><br>
+        {{ form.submit() }}
+        <p style="margin-top: 10px;">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div class="{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endwith %}
+    </form>
+</body>
+</html>

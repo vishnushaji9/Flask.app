@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #012e0c, #043811);
+            font-family: 'sans-serif';
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #fff;
+        }
+
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 330px;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #5b4b06;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #023423;
+        }
+
+        .register-container p {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .register-container a {
+            color: #e0e0ff;
+            text-decoration: underline;
+        }
+
+        .flash-message {
+            margin-top: 15px;
+            background-color: rgba(255, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="register-container">
+        <h2>Register</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <label for="email">{{ form.email.label }}</label>
+    {{ form.email(size=30, id="email") }}
+    {% for error in form.email.errors %}
+        <div class="flash-message">{{ error }}</div>
+    {% endfor %}
+
+    <label for="password">{{ form.password.label }}</label>
+    {{ form.password(size=30, id="password") }}
+    {% for error in form.password.errors %}
+        <div class="flash-message">{{ error }}</div>
+    {% endfor %}
+
+    <label for="confirm_password">{{ form.confirm_password.label }}</label>
+    {{ form.confirm_password(size=30, id="confirm_password") }}
+    {% for error in form.confirm_password.errors %}
+        <div class="flash-message">{{ error }}</div>
+    {% endfor %}
+
+    {{ form.submit() }}
+</form>
+
+
+        <p>Already registered? <a href="{{ url_for('login') }}">Login here</a></p>
+    </div>
+</body>
+</html>
